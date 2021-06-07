@@ -1,16 +1,41 @@
-version: '3'
-
+version: '3.3'
 services:
   fivem:
-    image: spritsail/fivem
-    container_name: fivem
-    restart: always
+    container_name: FiveM
+    restart: on-failure
     stdin_open: true
     tty: true
-    volumes:
-      - "/path/to/resources/folder:/config"
-    ports:
-      - "30120:30120"
-      - "30120:30120/udp"
     environment:
-      LICENSE_KEY: "license-key-here"
+        - LICENSE_KEY=<your-license-here>
+    ports:
+        - '30122:30120/tcp'
+        - '30120:30120/udp'
+        - '40120:40120'
+    volumes:
+      - type: bind
+        source: /c/FXServer/resources
+        target: /config
+    volumes:
+        - '/volumes/fivem:/config'
+    image: 'fivem:4030'
+
+  mysql80:
+    image: mysql
+    container_name: mysql80-fivem
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: gs5RtktFGzHBvRdh
+    ports:
+      - 3306:3306
+    volumes:
+      - type: bind
+        source: /c/FXServer/MYSQL
+        target: /var/lib/mysql/
+
+  adminer:
+    image: adminer
+    container_name: adminer_mysql
+    restart: always
+    ports:
+      - 8080:8080

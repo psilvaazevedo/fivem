@@ -1,6 +1,6 @@
-ARG FIVEM_NUM=3922
-ARG FIVEM_VER=3922-d59ca5ee4232a9d636fd71e116f61960e974b29e
-ARG DATA_VER=7680f316a7a128ca09d27101dac572098c111242
+ARG FIVEM_NUM=4030
+ARG FIVEM_VER=4030-001f990f0d79d78b09f522086da47a1537bb421e
+ARG DATA_VER=0169fdddaa9511558cfa17bcf80a832f56c359ff
 
 FROM spritsail/alpine:3.13 as builder
 
@@ -45,6 +45,7 @@ COPY --from=builder /output/ /
 
 WORKDIR /config
 EXPOSE 30120
+EXPOSE 40120
 
 # Default to an empty CMD, so we can use it to add seperate args to the binary
 CMD [""]
